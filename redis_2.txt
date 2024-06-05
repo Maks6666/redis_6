@@ -1,0 +1,129 @@
+127.0.0.1:6379> set usernames:username "Maks"
+OK
+127.0.0.1:6379> LPUSH todo_list "Cook a lunch" "Study Redis"
+(integer) 2
+127.0.0.1:6379> HSET userdata age 18
+(integer) 1
+127.0.0.1:6379> HSET userdata country Ukraine
+(integer) 1
+127.0.0.1:6379> HGETALL userdata
+1) "age"
+2) "18"
+3) "country"
+4) "Ukraine"
+127.0.0.1:6379> SADD tags "programming" "redis" "tutorial"
+(integer) 3
+127.0.0.1:6379> SMEMBERS tags
+1) "programming"
+2) "redis"
+3) "tutorial"
+127.0.0.1:6379> set page_views 0
+OK
+127.0.0.1:6379> INCRBY page_views 5
+(integer) 5
+127.0.0.1:6379> get page_views
+"5"
+127.0.0.1:6379> set session_token "abc123"
+OK
+127.0.0.1:6379> EXPIRE session_token 120
+(integer) 1
+127.0.0.1:6379> EXISTS session_token
+(integer) 1
+127.0.0.1:6379> EXISTS session_token
+(integer) 0
+127.0.0.1:6379> del usernames:username
+(integer) 1
+127.0.0.1:6379> exists usernames:username
+(integer) 0
+127.0.0.1:6379> set user1:name "Maks"
+OK
+127.0.0.1:6379> KEYS user:*
+1) "user:name"
+127.0.0.1:6379> set user2:name "Tom"
+OK
+127.0.0.1:6379> KEYS user:*
+1) "user:name"
+127.0.0.1:6379> SETBIT online_status 0 1
+(integer) 0
+127.0.0.1:6379> GETBIT online_status 0
+(integer) 1
+127.0.0.1:6379> RPUSH cache:popular_articles 1 2 3 4 5
+(integer) 5
+127.0.0.1:6379> LRANGE cache:popular_articles 0 -1
+1) "1"
+2) "2"
+3) "3"
+4) "4"
+5) "5"
+127.0.0.1:6379>
+127.0.0.1:6379> SADD set1 1 2 3 4 5
+(integer) 5
+127.0.0.1:6379>
+127.0.0.1:6379> SADD set2 3 4 5 6 7
+(integer) 5
+127.0.0.1:6379> SUNIONSTORE union_set set1 set2
+(integer) 7
+127.0.0.1:6379> SINTERSTORE intersection_set set1 set2
+(integer) 3
+127.0.0.1:6379> SMEMBERS union_set
+1) "1"
+2) "2"
+3) "3"
+4) "4"
+5) "5"
+6) "6"
+7) "7"
+127.0.0.1:6379> SMEMBERS intersection_set
+1) "3"
+2) "4"
+3) "5"
+127.0.0.1:6379> SUBSCRIBE messages
+1) "subscribe"
+2) "messages"
+3) (integer) 1
+
+127.0.0.1:6379(subscribed mode)> SUBSCRIBE messages1) "subscribe"2) "messages"3) (integer) 1
+Invalid argument(s)
+127.0.0.1:6379(subscribed mode)>
+127.0.0.1:6379(subscribed mode)>
+127.0.0.1:6379(subscribed mode)> SUBSCRIBE messages
+1) "subscribe"
+2) "messages"
+3) (integer) 1
+127.0.0.1:6379(subscribed mode)> 1) "subscribe"2) "messages"3) (integer) 1
+Invalid argument(s)
+127.0.0.1:6379(subscribed mode)>
+127.0.0.1:6379(subscribed mode)>
+127.0.0.1:6379(subscribed mode)> exit()
+(error) ERR unknown command 'exit()', with args beginning with:
+127.0.0.1:6379(subscribed mode)> quit()
+(error) ERR unknown command 'quit()', with args beginning with:
+127.0.0.1:6379(subscribed mode)> quit
+(base) maxkucher@Noutbuk-Max ~ % redis cli
+zsh: command not found: redis
+(base) maxkucher@Noutbuk-Max ~ % redis-cli
+
+127.0.0.1:6379> GEOADD locations 50.4501 30.5234 "Kyiv" 46.4825 30.7233 "Odesa" 49.8397 24.0297 "Lviv"
+(integer) 3
+127.0.0.1:6379> RPUSH tasks "Task 1" "Task 2" "Task 3"
+(integer) 3
+127.0.0.1:6379> LRANGE tasks 0 -1
+1) "Task 1"
+2) "Task 2"
+3) "Task 3"
+127.0.0.1:6379> RPUSH tasks "Task 4"
+(integer) 4
+127.0.0.1:6379> LPOP tasks
+"Task 1"
+127.0.0.1:6379> LRANGE tasks 0 -1
+1) "Task 2"
+2) "Task 3"
+3) "Task 4"
+127.0.0.1:6379> PFADD unique_users user1 user2 user3 user4 user5
+(integer) 1
+127.0.0.1:6379> RPUSH message_queue "Message 1" "Message 2" "Message 3"
+(integer) 3
+127.0.0.1:6379> LRANGE message_queue 0 -1
+1) "Message 1"
+2) "Message 2"
+3) "Message 3"
